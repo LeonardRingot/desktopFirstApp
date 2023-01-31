@@ -1,0 +1,21 @@
+{
+  "name": "desktopfirstapp",
+  "version": "1.0.0",
+  "description": "My first app desktop",
+  "main": "main.js",
+  "scripts": {
+    "test": "test",
+    "start": "electron main.js",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "author": "leonardringot",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.1.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-updater": "^5.3.0"
+  }
+}
