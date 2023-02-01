@@ -6,6 +6,7 @@ const createWindow = () => {
     win = new BrowserWindow({
       width: 800,
       height: 600,
+      icon: __dirname + '/images/cocktail.ico',
       webPreferences: {
         nodeIntegration: true,
         preload: path.join(__dirname, 'preload.js')
@@ -30,7 +31,6 @@ const createWindow = () => {
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
   })
-
 
 
   ipcMain.on('app_version', (event) => {
