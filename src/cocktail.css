@@ -1,0 +1,21 @@
+#cocktail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #cocktail-container h2 {
+    margin-top: 50px;
+  }
+  
+  #cocktail-container img {
+    width: 300px;
+    height: 300px;
+    margin-top: 50px;
+  }
+  
+  #cocktail-container p {
+    margin-top: 50px;
+    text-align: center;
+    width: 50%;
+  }

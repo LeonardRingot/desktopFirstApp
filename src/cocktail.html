@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Cocktail Description</title>
+    <link rel="stylesheet" href="./cocktail.css">
+    <script src="./cocktaildescripion.js"></script>
+  </head>
+  <body>
+    <div id="cocktail-container"></div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const cocktailId = urlParams.get('id');
+      displayCocktail(cocktailId);
+    </script>
+  </body>
+</html>

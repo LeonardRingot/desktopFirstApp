@@ -23,6 +23,26 @@
     .hidden {
       display: none;
     }
+    #cocktail-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.cocktail-card {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.cocktail-card img {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
   </style>
 </head>
 <body>
@@ -35,9 +55,16 @@
       Restart
     </button>
   </div>
+  <h1>Cocktail Finder</h1>
+  <input type="text" id="search-input" placeholder="Search cocktails">
+  <button id="search-button">Search</button>
+  <div id="cocktail-list"></div>
+  <script src="./src/cocktail.js"></script>
   <script>
     const { ipcRenderer } = require("electron");
     const version = document.getElementById("version");
+    const axios = require("axios");
+
 
     const notification = document.getElementById("notification");
     const message = document.getElementById("message");
@@ -67,5 +94,6 @@
     function restartApp() {
       ipcRenderer.send("restart_app");
     }
+
   </script>
 </body>

@@ -1,6 +1,6 @@
 {
   "name": "desktopfirstapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My first app desktop",
   "main": "main.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "electron-builder": "^23.6.0"
   },
   "dependencies": {
+    "axios": "^1.2.6",
     "electron-updater": "^5.3.0"
   },
   "repository": {
