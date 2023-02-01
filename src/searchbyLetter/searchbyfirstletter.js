@@ -1,36 +1,28 @@
-const searchInput = document.getElementById("search-input");
-const searchButton = document.getElementById("search-button");
-const cocktailList = document.getElementById("cocktail-list");
-
-function displayCocktails(searchTerm = '') {
-  fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchTerm}`)
-    .then(response => response.json())
-    .then(data => {
-      const cocktails = data.drinks;
-      let html = '';
-      cocktails.forEach(cocktail => {
-        if (cocktail.strDrink.toLowerCase().includes(searchTerm.toLowerCase())) {
-          html += `
-            <div class="cocktail-card" onclick="displayCocktail('${cocktail.idDrink}')">
-              <h2>${cocktail.strDrink}</h2>
-              <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}"/>
-            </div>
-          `;
-        }
-      });
-      cocktailList.innerHTML = html;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-displayCocktails();
-
-searchInput.addEventListener("input", function() {
-  let searchTerm = searchInput.value;
-  if (!searchTerm) {
-    searchTerm = '';
+async function getCocktails(letter) {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`);
+    const data = await response.json();
+    console.log(data.drinks)
+    return data.drinks;
   }
-  displayCocktails(searchTerm);
-});
+  
+  async function displayCocktails(letter) {
+    const cocktails = await getCocktails(letter);
+    const cocktailList = document.getElementById('cocktail-list');
+    cocktailList.innerHTML = '';
+    cocktails.forEach(cocktail => {
+      const row = document.createElement('tr');
+      const nameCell = document.createElement('td');
+      nameCell.textContent = cocktail.strDrink;
+      row.appendChild(nameCell);
+      const imageCell = document.createElement('td');
+      const image = document.createElement('img');
+      image.src = cocktail.strDrinkThumb;
+      imageCell.appendChild(image);
+      row.appendChild(imageCell);
+      cocktailList.appendChild(row);
+    });
+  }
+  
+  document.getElementById('letter-select').addEventListener('change', event => {
+    displayCocktails(event.target.value);
+  });
