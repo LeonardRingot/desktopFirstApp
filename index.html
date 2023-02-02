@@ -44,10 +44,22 @@
   border-radius: 50%;
   margin-bottom: 20px;
 }
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
   </style>
 </head>
 <body>
-  <h1>Bienvenue sur l'API d'alcool HIIC</h1>
+  <h1>Bienvenue sur l'API CocktailDB</h1>
   <p>
     Avec Node.js <span id="node-version"></span>, Chromium
     <span id="chrome-version"></span>, and Electron
@@ -62,11 +74,18 @@
       Restart
     </button>
   </div>
-  <a href="./src/searchbyLetter/index.html">Rechercher un cocktail par sa 1ere lettre </a>
+  <a class="button" href="./src/searchbyLetter/index.html">Rechercher un cocktail par sa 1ere lettre </a>
+  <a  class="button" href="./src/searchIngredientbyName/index.html">Rechercher un ingredient par son nom</a>
+  <a class="button" href="./src/searchbyIngredient/index.html">Recherche par ingredient</a>
+  <a class="button" href="./src/filterbyalcoholic/index.html">Filtrer par son alcoolémie</a>
+  <a class="button" href="./src/filterbycategory/index.html">Filter par catégorie</a>
+  <a class="button" href="./src/filterbyglass/index.html">Filter par verre</a>
   <h1>Rechercher un cocktail par son nom</h1>
   <input type="text" id="search-input" placeholder="Search cocktails">
   <button id="search-button">Search</button>
-  <div id="cocktail-list"></div>
+  <div id="cocktail-list">
+    
+  </div>
   <script src="./src/cocktail.js"></script>
   </html>
 </body>

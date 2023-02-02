@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Filter par alcolémie ou non</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+button {
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#cocktail-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-top: 50px;
+}
+
+.cocktail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cocktail img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.cocktail h2 {
+  margin-bottom: 20px;
+}
+
+  </style>
+  </head>
+  <body>
+    <a href="../../index.html">Retour</a>
+    <h1>Filter par alcolémie ou non</h1>
+    <button id="alcoholic">Alcoolisé</button>
+    <button id="non-alcoholic">Non alcoolisé</button>
+    <div id="cocktail-list"></div>
+    <script src="./filterbyalcoholic.js"></script>
+  </body>
+  </html>

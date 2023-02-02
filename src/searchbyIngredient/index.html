@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Rechercher un ingredient par son nom</title>
+  <style>
+        #cocktail-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background-color: #eaeaea;
+      text-align: center;
+    }
+.cocktail-card {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+}
+  </style>
+  </head>
+  <body>
+    <a href="../../index.html">Retour</a>
+    <h1>Rechercher par ingredient</h1>
+  <input type="text" id="search-input" placeholder="Search ingredients">
+  <button id="search-button">Search</button>
+  <div id="cocktail-list"></div>
+    <script src="./searchbyingredient.js"></script>
+  </body>
+  </html>

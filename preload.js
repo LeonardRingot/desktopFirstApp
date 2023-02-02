@@ -36,6 +36,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log(arg);
     version.innerText = "Version " + arg.version;
   });
+  ipcRenderer.send("cocktail");
+  ipcRenderer.on("cocktail", (event, arg) => {
+    ipcRenderer.removeAllListeners("cocktail");
+    console.log(arg);
+    displayCocktails(arg)
+  });
 })
 
 contextBridge.exposeInMainWorld('api', {

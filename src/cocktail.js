@@ -7,11 +7,12 @@ function displayCocktails(searchTerm = '') {
     .then(response => response.json())
     .then(data => {
       const cocktails = data.drinks;
+      console.log(cocktails)
       let html = '';
       cocktails.forEach(cocktail => {
         if (cocktail.strDrink.toLowerCase().includes(searchTerm.toLowerCase())) {
           html += `
-            <div class="cocktail-card" onclick="displayCocktail('${cocktail.idDrink}')">
+            <div class="cocktail-card" onclick="displayCocktails('${cocktail.idDrink}')">
               <h2>${cocktail.strDrink}</h2>
               <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}"/>
             </div>
