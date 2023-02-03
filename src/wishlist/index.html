@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Ma wishlist</title>
+  </head>
+  <body>
+    <a href="../../index.html">Retour</a>
+    <h1>ma wishlist</h1>
+    <div id="wishlist"></div>
+    <script src="./mywishlist.js"></script>
+    <script>
+      window.addEventListener("message", event => {
+        if (event.data.type === "displayWishlist") {
+          window.parent.postMessage({ type: "displayWishlist" }, "*");
+        } else if (event.data.type === "displayWishlist success") {
+          const wishlist = event.data.wishlist;
+          const myWishList = document.getElementById("wishlist");
+          myWishList.innerHTML = "";
+          wishlist.forEach(row => {
+            const drink = document.createElement("div");
+            drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p> `;
+            myWishList.appendChild(drink);
+          });
+          console.log("Received displayWishlist success message");
+        }
+      });
+    </script>
+  </body>
+  
+</html>

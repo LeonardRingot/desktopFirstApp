@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F2F2F2;
+      }
+      .container {
+      width: 500px;
+      margin: 50px auto;
+      text-align: center;
+      }
+      
+      h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #333;
+      }
+      
+      .card {
+      background-color: #FFF;
+      box-shadow: 0px 0px 10px 0px #CCC;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: left;
+      width: 80%;
+      margin: 20px auto;
+      }
+      
+      label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: block;
+      }
+      
+      input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      border: 1px solid #CCC;
+      font-size: 14px;
+      }
+      
+      input[type="submit"] {
+      background-color: #4CAF50;
+      color: #FFF;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 20px;
+      width: 50%;
+      }
+      
+      input[type="submit"]:hover {
+      background-color: #3E8E41;
+      }
+      
+      .random-cocktail-card {
+      background-color: #FFF;
+      box-shadow: 0px 0px 10px 0px #CCC;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+      width: 80%;
+      margin: 20px auto;
+      }
+      
+      .random-cocktail-card img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      margin-bottom: 20px;
+      }
+      </style>  
+
+        
+</head>
+<body>
+    <h1>Login</h1>
+    <form>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+      </div>
+      <button type="submit" id="submit">Login</button>
+    </form>
+    <div id="random-cocktail" class="random-cocktail-card"></div>
+    <script src="./loginRandomImage.js"></script>
+  </body>
+</html>

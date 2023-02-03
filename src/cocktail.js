@@ -2,6 +2,9 @@ const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const cocktailList = document.getElementById("cocktail-list");
 
+const wishlist = [];
+
+
 function displayCocktails(searchTerm = '') {
   fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
     .then(response => response.json())
@@ -9,12 +12,14 @@ function displayCocktails(searchTerm = '') {
       const cocktails = data.drinks;
       console.log(cocktails)
       let html = '';
-      cocktails.forEach(cocktail => {
+      cocktails.map(cocktail => {
         if (cocktail.strDrink.toLowerCase().includes(searchTerm.toLowerCase())) {
           html += `
-            <div class="cocktail-card" onclick="displayCocktails('${cocktail.idDrink}')">
+            <div class="cocktail-card" >
               <h2>${cocktail.strDrink}</h2>
+              <p>${cocktail.idDrink}</p>
               <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}"/>
+             <button onclick="saveToWishlist('${cocktail.idDrink}', '${cocktail.strDrink}')">Add to Wishlist</button>
             </div>
           `;
         }
@@ -35,3 +40,13 @@ searchInput.addEventListener("input", function() {
   }
   displayCocktails(searchTerm);
 });
+function saveToWishlist(idDrink,strDrink) {
+  const objet = {
+    idDrink:idDrink,
+    strDrink:strDrink
+  }
+  window.postMessage({ type: "saveToWishlist", idDrink: idDrink, strDrink: strDrink }, "*");
+  console.log(wishlist);
+  console.log('mon objet',objet)
+
+}

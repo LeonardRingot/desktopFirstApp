@@ -9,17 +9,22 @@ const database = new sqlite3.Database("./database/cocktail.db", (err) => {
   console.log('Connected to the in-memory sqlite db')
 });
 database.run(`
-    CREATE TABLE IF NOT EXISTS cocktail (
-      id INTEGER NOT NULL,
-      idDrink INTEGER NOT NULL,
-      strDrink TEXT NOT NULL,
-      strCategory TEXT NOT NULL,
-      strAlcoholic TEXT NOT NULL,
-      strGlass TEXT NOT NULL,
-      strInstructions TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS user (
+  id INTEGER PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
     );
   `);
-console.log('ma bdd',database)
+  database.run(`
+  CREATE TABLE IF NOT EXISTS wishlist (
+    id INTEGER PRIMARY KEY,
+    idDrink INTEGER NOT NULL UNIQUE,
+    strDrink TEXT NOT NULL,
+    UserId INTEGER NOT NULL,
+  FOREIGN KEY (UserId) REFERENCES User(id)
+  );
+`);
 const createWindow = () => {
     win = new BrowserWindow({
       width: 800,
@@ -30,14 +35,16 @@ const createWindow = () => {
         preload: path.join(__dirname, 'preload.js')
       }
     })
-    win.loadFile('index.html')
+    win.loadFile('login.html')
 
     win.once('ready-to-show', () => {
       autoUpdater.checkForUpdatesAndNotify();
     })
   
   }
-
+  ipcMain.on("authenticated", async event => {
+    win.loadURL(__dirname,'index.html')
+  })
   app.whenReady().then(() => {
     createWindow()
 
@@ -63,6 +70,47 @@ const createWindow = () => {
       event.sender.send('cocktail', rows );
     })
   });
+
+  ipcMain.on('saveToWishlist', (event, idDrink, strDrink) => {
+    database.get(`SELECT * FROM wishlist WHERE idDrink = ?`, [idDrink], (err, row) => {
+    if (err) {
+    throw err;
+    } else if (row) {
+    console.log(`Cocktail already exists in the wishlist`);
+    event.sender.send('saveToWishlist error', 'Le Cocktail existe deja dans la wishlist tu vas quand meme pas en abuser hein :)');
+    } else {
+      UserId = '1'
+    database.run( `INSERT INTO wishlist (idDrink, strDrink, UserId) VALUES (?, ?, ?)` , [idDrink, strDrink, UserId], function(err) {
+    if (err) {
+    throw err;
+    } else {
+    console.log(`Cocktail added to the wishlist: test`);
+    event.sender.send('saveToWishlist success', 'Le cocktail a été ajouté dans la wishlist sale alcoolique');
+    }
+    });
+    }
+    });
+    });
+
+    ipcMain.on("displayWishlist", (event) => {
+      database.all("SELECT * FROM wishlist", [], (err, rows) => {
+      if (err) {
+      event.sender.send("displayWishlist error", err.message);
+      } else {
+      event.sender.send("displayWishlist success", rows);
+      }
+      });
+      });
+      ipcMain.on('login', (event, username, password) => {
+        // Perform the necessary checks to validate the user credentials
+        // For example, you can check if the username and password match with the database
+        if (username === 'admin' && password === 'admin') {
+        event.sender.send('login-success');
+        } else {
+        event.sender.send('login-error', 'Invalid username or password');
+        }
+        });
+  
   ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
   });

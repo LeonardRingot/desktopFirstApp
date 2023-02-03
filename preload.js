@@ -36,12 +36,74 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log(arg);
     version.innerText = "Version " + arg.version;
   });
-  ipcRenderer.send("cocktail");
-  ipcRenderer.on("cocktail", (event, arg) => {
-    ipcRenderer.removeAllListeners("cocktail");
-    console.log(arg);
-    displayCocktails(arg)
-  });
+ 
+
+  window.addEventListener("message", event => {
+    if (event.data.type === "saveToWishlist") {
+    ipcRenderer.send("saveToWishlist", event.data.idDrink, event.data.strDrink);
+    }
+    });
+
+    ipcRenderer.on("saveToWishlist", (event, arg) => {
+      console.log("Received IPC message:", arg);
+      });
+      
+      ipcRenderer.on("saveToWishlist error", (event, message) => {
+        console.log(message);
+        alert(message);
+      });
+      
+      ipcRenderer.on("saveToWishlist success", (event, message) => {
+        console.log(message);
+        alert(message);
+      });
+
+      ipcRenderer.on("displayWishlist success", (event, wishlist) => {
+        console.log(wishlist);
+        const myWishList = document.getElementById("wishlist");
+
+        myWishList.innerHTML = "";
+
+        wishlist.forEach((row) => {
+
+          const drink = document.createElement("div");
+
+          drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p>`;
+
+          myWishList.appendChild(drink);
+        });
+      });
+      
+      // Attach event listener for displayWishlistError message from main process
+      ipcRenderer.on("displayWishlist error", (event, message) => {
+
+        console.log(message);
+
+        alert(message);
+      });
+      
+      // Send displayWishlist message to main process
+      ipcRenderer.send("displayWishlist");
+
+      document.getElementById('submit').addEventListener('click', () => {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if (!username || !password) {
+          alert("Username and password are required");
+        } else {
+          ipcRenderer.send('login', username, password);
+        }
+      });
+      
+      ipcRenderer.on('login-success', () => {
+        // Redirect the user to the next page
+        window.location.href = 'index.html';
+      });
+      
+      ipcRenderer.on('login-error', (event, message) => {
+        alert(message);
+      });
 })
 
 contextBridge.exposeInMainWorld('api', {
