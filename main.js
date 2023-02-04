@@ -3,8 +3,8 @@ const { autoUpdater } = require('electron-updater');
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
 let win
-
-const database = new sqlite3.Database("./database/cocktail.db", (err) => {
+//./database/cocktail.db
+const database = new sqlite3.Database("./db.sqlite3", (err) => {
   if (err) console.error('Database opening error: ', err);
   console.log('Connected to the in-memory sqlite db')
 });
