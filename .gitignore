@@ -127,3 +127,5 @@ dist
 .pnp.*
 
 electron-builder.yml
+
+db.sqlite3
