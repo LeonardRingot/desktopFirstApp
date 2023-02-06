@@ -56,11 +56,11 @@ const createWindow = () => {
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
-  //   const NOTIFICATION_TITLE = 'Salut'
-  // const NOTIFICATION_BODY = 'App open'
-  // const a = new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY})
-  // a.show()
-  // console.log(a);
+    const NOTIFICATION_TITLE = 'Salut'
+  const NOTIFICATION_BODY = 'App open'
+  const a = new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY})
+  a.show()
+  console.log(a);
   })
 
   app.on('window-all-closed', () => {
