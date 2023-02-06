@@ -21,6 +21,11 @@ CREATE TABLE IF NOT EXISTS user (
     id INTEGER PRIMARY KEY,
     idDrink INTEGER NOT NULL UNIQUE,
     strDrink TEXT NOT NULL,
+    strInstructions TEXT NOT NULL,
+    strGlass TEXT NOT NULL,
+    strIngredient1 TEXT,
+    strIngredient2 TEXT,
+    strIngredient3 TEXT,
     UserId INTEGER NOT NULL,
   FOREIGN KEY (UserId) REFERENCES User(id)
   );
@@ -71,7 +76,7 @@ const createWindow = () => {
     })
   });
 
-  ipcMain.on('saveToWishlist', (event, idDrink, strDrink) => {
+  ipcMain.on('saveToWishlist', (event, idDrink, strDrink, strInstructions, strGlass,strIngredient1,strIngredient2,strIngredient3 ) => {
     database.get(`SELECT * FROM wishlist WHERE idDrink = ?`, [idDrink], (err, row) => {
     if (err) {
     throw err;
@@ -80,7 +85,7 @@ const createWindow = () => {
     event.sender.send('saveToWishlist error', 'Le Cocktail existe deja dans la wishlist tu vas quand meme pas en abuser hein :)');
     } else {
       UserId = '1'
-    database.run( `INSERT INTO wishlist (idDrink, strDrink, UserId) VALUES (?, ?, ?)` , [idDrink, strDrink, UserId], function(err) {
+    database.run( `INSERT INTO wishlist (idDrink, strDrink, strInstructions, strGlass, strIngredient1, strIngredient2,strIngredient3, UserId) VALUES (?, ?, ?, ?, ?,?,?,? )` , [idDrink, strDrink,strInstructions, strGlass,strIngredient1,strIngredient2,strIngredient3, UserId], function(err) {
     if (err) {
     throw err;
     } else {
@@ -91,19 +96,45 @@ const createWindow = () => {
     }
     });
     });
-
-    ipcMain.on("displayWishlist", (event) => {
-      database.all("SELECT * FROM wishlist", [], (err, rows) => {
+    ipcMain.on('displayWishlist', (event) => {
+      database.all(`SELECT * FROM wishlist`, [], (err, rows) => {
+        console.log('ouai allo')
       if (err) {
-      event.sender.send("displayWishlist error", err.message);
+      throw err;
       } else {
-      event.sender.send("displayWishlist success", rows);
+      console.log(`Wishlist fetched`);
+      event.sender.send('displayWishlist success', rows);
       }
       });
       });
+      ipcMain.on('deleteWishlistItem', (event, idDrink) => {
+        console.log('test 1')
+        database.get(`SELECT * FROM wishlist WHERE idDrink = ?`, [idDrink], (err, row) => {
+          console.log('test 2')
+            if (err) {
+              console.log('test 3')
+              console.log(err)
+              event.sender.send('deleteWishlistItem error', `An error occurred while retrieving the cocktail from the database: ${err}`);
+            } else if (!row) {
+              console.log('test 4')
+                console.log(`Cocktail doesn't exist in the wishlist`);
+                event.sender.send('deleteWishlistItem error', `Le Cocktail n'existe pas dans la wishlist`);
+            } else {
+              console.log('test 5')
+                database.run(`DELETE FROM wishlist WHERE idDrink = ?`, [idDrink], function(err) {
+                    if (err) {
+                      console.log('test 6')
+                        throw err;
+                    } else {
+                      console.log('test 7')
+                        console.log(`Cocktail deleted from the wishlist: ${idDrink}`);
+                        event.sender.send('deleteWishlistItem success', `Le Cocktail a été supprimé de la wishlist`);
+                    }
+                });
+            }
+        });
+    });
       ipcMain.on('login', (event, username, password) => {
-        // Perform the necessary checks to validate the user credentials
-        // For example, you can check if the username and password match with the database
         if (username === 'admin' && password === 'admin') {
         event.sender.send('login-success');
         } else {

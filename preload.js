@@ -40,9 +40,23 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   window.addEventListener("message", event => {
     if (event.data.type === "saveToWishlist") {
-    ipcRenderer.send("saveToWishlist", event.data.idDrink, event.data.strDrink);
+    ipcRenderer.send("saveToWishlist", event.data.idDrink, event.data.strDrink, event.data.strInstructions, event.data.strGlass, event.data.strIngredient1, event.data.strIngredient2, event.data.strIngredient3);
     }
-    });
+    }); 
+
+    window.addEventListener("message", event => {
+      if (event.data.type === "deleteWishlistItem") {
+      ipcRenderer.send("deleteWishlistItem", event.data.idDrink);
+      }
+      }); 
+
+      ipcRenderer.on('deleteWishlistItem success', (event, message) => {
+        alert(message);
+        });
+        
+        ipcRenderer.on('deleteWishlistItem error', (event, message) => {
+        alert(message);
+        });
 
     ipcRenderer.on("saveToWishlist", (event, arg) => {
       console.log("Received IPC message:", arg);
@@ -68,13 +82,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
           const drink = document.createElement("div");
 
-          drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p>`;
+          drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p>  <p>Instructions: ${row.strInstructions}</p> <p>Verre: ${row.strGlass}</p> <p>Ingredient1: ${row.strIngredient1}</p> <p>strIngredient2: ${row.strIngredient2}</p> <p>strIngredient3: ${row.strIngredient3}</p>  <button onclick="deleteWishlistItem(${row.idDrink})">Delete</button>`;
 
           myWishList.appendChild(drink);
         });
       });
       
-      // Attach event listener for displayWishlistError message from main process
       ipcRenderer.on("displayWishlist error", (event, message) => {
 
         console.log(message);
@@ -82,7 +95,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         alert(message);
       });
       
-      // Send displayWishlist message to main process
+      
       ipcRenderer.send("displayWishlist");
 
       document.getElementById('submit').addEventListener('click', () => {
@@ -95,9 +108,23 @@ window.addEventListener('DOMContentLoaded', async () => {
           ipcRenderer.send('login', username, password);
         }
       });
-      
+      ipcRenderer.on("displayWishlist success", (event, wishlist) => {
+        window.postMessage({ type: "displayWishlist success", wishlist: wishlist }, "*");
+        });
+
+        
+        
+       
+          
+          window.addEventListener('message', (event) => {
+          if (event.data.type === 'displayWishlist') {
+          ipcRenderer.send('displayWishlist');
+          } else if (event.data.type === 'deleteWishlistItem') {
+            console.log('aaaaaaaaaaaaaaa')
+          ipcRenderer.send('deleteWishlistItem', event.data.idDrink);
+          }
+          });
       ipcRenderer.on('login-success', () => {
-        // Redirect the user to the next page
         window.location.href = 'index.html';
       });
       

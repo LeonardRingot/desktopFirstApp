@@ -2,29 +2,68 @@
 <html lang="fr">
 <head>
   <title>Ma wishlist</title>
-  </head>
-  <body>
-    <a href="../../index.html">Retour</a>
-    <h1>ma wishlist</h1>
-    <div id="wishlist"></div>
-    <script src="./mywishlist.js"></script>
-    <script>
-      window.addEventListener("message", event => {
-        if (event.data.type === "displayWishlist") {
-          window.parent.postMessage({ type: "displayWishlist" }, "*");
-        } else if (event.data.type === "displayWishlist success") {
-          const wishlist = event.data.wishlist;
-          const myWishList = document.getElementById("wishlist");
-          myWishList.innerHTML = "";
-          wishlist.forEach(row => {
-            const drink = document.createElement("div");
-            drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p> `;
-            myWishList.appendChild(drink);
-          });
-          console.log("Received displayWishlist success message");
-        }
-      });
-    </script>
-  </body>
+</head>
+<style>
+  button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+#wishlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+
+  .wishlist-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f2f2f2;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+.wishlist-item p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.wishlist-item p:first-child {
+  font-weight: bold;
+}
+</style>
+<body>
+  <a href="../../index.html">Retour</a>
+  <h1>ma wishlist</h1>
+  <div id="wishlist"></div>
+  <!-- <script>
+    function deleteWishlistItem(id) {
+      console.log(`Deleting wishlist item with id: ${id}`);
+      window.postMessage({ type: "deleteWishlistItem", id: id }, "*");
+      console.log('Wishlist item deleted');
+    }
+  </script> -->
+  <script src="./mywishlist.js"></script>
+  <!-- <script>
+    const myWishList = document.getElementById("wishlist");
   
+    wishlist.forEach((row) => {
+      const drink = document.createElement("div");
+      drink.innerHTML = `<p>ID: ${row.idDrink}</p> <p>Nom: ${row.strDrink}</p> <button onclick="deleteWishlistItem(${row.idDrink})">Delete</button>`;
+      myWishList.appendChild(drink);
+    });
+  </script> -->
+</body>
 </html>

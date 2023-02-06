@@ -16,10 +16,15 @@ function displayCocktails(searchTerm = '') {
         if (cocktail.strDrink.toLowerCase().includes(searchTerm.toLowerCase())) {
           html += `
             <div class="cocktail-card" >
-              <h2>${cocktail.strDrink}</h2>
-              <p>${cocktail.idDrink}</p>
+              <h2>Nom: ${cocktail.strDrink}</h2>
+              <p>identifiant cocktail: ${cocktail.idDrink}</p>
+              <p>Instructions: ${cocktail.strInstructions}</p>
+              <p>Verre: ${cocktail.strGlass}</p>
+              <p>Ingredients 1 : ${cocktail.strIngredient1}</p>
+              <p>Ingredient 2: ${cocktail.strIngredient2}</p>
+              <p>Ingredeients 3: ${cocktail.strIngredient3}</p>
               <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}"/>
-             <button onclick="saveToWishlist('${cocktail.idDrink}', '${cocktail.strDrink}')">Add to Wishlist</button>
+             <button onclick="saveToWishlist('${cocktail.idDrink}', '${cocktail.strDrink}','${cocktail.strInstructions}','${cocktail.strGlass}','${cocktail.strIngredient1}','${cocktail.strIngredient2}','${cocktail.strIngredient3}')">Add to Wishlist</button>
             </div>
           `;
         }
@@ -40,12 +45,18 @@ searchInput.addEventListener("input", function() {
   }
   displayCocktails(searchTerm);
 });
-function saveToWishlist(idDrink,strDrink) {
+function saveToWishlist(idDrink,strDrink, strInstructions, strGlass, strIngredient1, strIngredient2, strIngredient3) {
   const objet = {
     idDrink:idDrink,
-    strDrink:strDrink
+    strDrink:strDrink,
+    strInstructions:strInstructions,
+    strGlass:strGlass,
+    strIngredient1:strIngredient1,
+    strIngredient2:strIngredient2,
+    strIngredient3:strIngredient3
+
   }
-  window.postMessage({ type: "saveToWishlist", idDrink: idDrink, strDrink: strDrink }, "*");
+  window.postMessage({ type: "saveToWishlist", idDrink: idDrink, strDrink: strDrink ,strInstructions: strInstructions, strGlass:strGlass, strIngredient1:strIngredient1 ,strIngredient2:strIngredient2, strIngredient3:strIngredient3}, "*");
   console.log(wishlist);
   console.log('mon objet',objet)
 
