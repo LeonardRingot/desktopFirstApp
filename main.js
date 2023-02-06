@@ -42,9 +42,9 @@ const createWindow = () => {
     })
     win.loadFile('login.html')
 
-    win.once('ready-to-show', () => {
-      autoUpdater.checkForUpdatesAndNotify();
-    })
+    // win.once('ready-to-show', () => {
+    //   autoUpdater.checkForUpdatesAndNotify();
+    // })
   
   }
   ipcMain.on("authenticated", async event => {
