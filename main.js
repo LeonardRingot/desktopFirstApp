@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Notification } = require('electron')
 const { autoUpdater } = require('electron-updater');
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
@@ -56,6 +56,11 @@ const createWindow = () => {
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
+    const NOTIFICATION_TITLE = 'Salut'
+  const NOTIFICATION_BODY = 'App open'
+  const a = new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY})
+  a.show()
+  console.log(a);
   })
 
   app.on('window-all-closed', () => {
@@ -134,13 +139,31 @@ const createWindow = () => {
             }
         });
     });
-      ipcMain.on('login', (event, username, password) => {
-        if (username === 'admin' && password === 'admin') {
-        event.sender.send('login-success');
-        } else {
-        event.sender.send('login-error', 'Invalid username or password');
-        }
-        });
+
+    const insertSql = `INSERT OR IGNORE INTO user (username, password)
+    VALUES ('admin', 'admin')`;
+
+database.run(insertSql, function (err) {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log("User created successfully");
+    }
+});
+    ipcMain.on('login', (event, username, password) => {
+      const sql = `SELECT * FROM user WHERE username = '${username}' AND password = '${password}'`;
+    
+      database.get(sql, (err, row) => {
+          if (err) {
+              console.error(err.message);
+              event.sender.send('login-error', 'An error occurred while checking the credentials');
+          } else if (row) {
+              event.sender.send('login-success');
+          } else {
+              event.sender.send('login-error', 'Invalid username or password');
+          }
+      });
+  });
   
   ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
