@@ -2,27 +2,43 @@
 <html lang="fr">
 <head>
   <title>Rechercher un cocktail par sa premiere lettre</title>
+  <meta charset="UTF-8">
   <style>
-table {
-  width: 100%;
-  border-collapse: collapse;
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
-th, td {
-  border: 1px solid black;
-  padding: 8px;
-  text-align: left;
+.card {
+  width: 22%;
+  display: inline-block;
+  margin: 1rem;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px gray;
 }
 
-th {
-  background-color: lightgray;
+.card-img-top {
+  height: 12rem;
+  width: 50%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: cover;
 }
 
-img {
-  width: 50px;
-  height: 50px;
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1rem;
 }
-  </style>
+
+.card-text {
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+    </style>
   </head>
 <body>
     <h1>Rechercher un cocktail par sa premiere lettre</h1>
@@ -55,28 +71,8 @@ img {
       <option value="y">Y</option>
       <option value="z">Z</option>
     </select>
-    <table id="cocktail-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Categorie</th>
-          <th>Alcoolisé ?</th>
-          <th>Type de Verre</th>
-          <th>Instructions</th>
-          <th>Ingredient 1</th>
-          <th>Ingredient 2</th>
-          <th>Ingredient 3</th>
-          <th>Ingredient 4</th>
-           <th>Mesure 1</th>
-            <th>Mesure 2</th>
-             <th>Mesure 3</th>
-              <th>Mesure 4</th>
-        </tr>
-      </thead>
-      <tbody id="cocktail-list">
-      </tbody>
-    </table>
+    <div id="cocktail-list">
+    </div>
   <script src="./searchbyfirstletter.js"></script>
   </html>
 </body>
