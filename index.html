@@ -3,15 +3,16 @@
 <head>
   <title>Rechercher un cocktail par son nom</title>
   <style>
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 20px;
-      font-family: sans-serif;
-      background-color: #eaeaea;
-      text-align: center;
-    }
-    #notification {
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: #eaeaea;
+  text-align: center;
+}
+
+#notification {
   position: fixed;
   bottom: 20px;
   left: 20px;
@@ -21,10 +22,12 @@
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
 .hidden {
   display: none;
 }
-    #cocktail-list {
+
+#cocktail-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
@@ -43,7 +46,9 @@
   border-radius: 50%;
   margin-bottom: 20px;
 }
-a:link, a:visited {
+
+a:link,
+a:visited {
   background-color: #f44336;
   color: white;
   padding: 14px 25px;
@@ -52,9 +57,11 @@ a:link, a:visited {
   display: inline-block;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
   background-color: red;
 }
+
 #search-input {
   padding: 10px;
   font-size: 16px;
@@ -72,6 +79,25 @@ a:hover, a:active {
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  margin: 20px;
+  padding: 14px 25px;
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.nav-item:hover {
+  background-color: red;
 }
 
   </style>
@@ -92,13 +118,17 @@ a:hover, a:active {
       Restart
     </button>
   </div> -->
-  <a class="button" href="./src/searchbyLetter/index.html">Rechercher un cocktail par sa 1ere lettre </a>
-  <a  class="button" href="./src/searchIngredientbyName/index.html">Rechercher un ingredient par son nom</a>
-  <a class="button" href="./src/searchbyIngredient/index.html">Recherche par ingredient</a>
-  <a class="button" href="./src/filterbyalcoholic/index.html">Filtrer par son alcoolémie</a>
-  <a class="button" href="./src/filterbycategory/index.html">Filter par catégorie</a>
-  <a class="button" href="./src/filterbyglass/index.html">Filter par verre</a>
-  <a class="button" href="./src/wishlist/index.html">Ma wishlist</a>
+  <div>
+
+  </div class="nav-container">
+  <a class="nav-item" href="./src/searchbyLetter/index.html">Rechercher un cocktail par sa 1ere lettre </a>
+  <a  class="nav-item" href="./src/searchIngredientbyName/index.html">Rechercher un ingredient par son nom</a>
+  <a class="nav-item" href="./src/searchbyIngredient/index.html">Recherche par ingredient</a>
+  <a class="nav-item" href="./src/filterbyalcoholic/index.html">Filtrer par son alcoolémie</a>
+  <a class="nav-item" href="./src/filterbycategory/index.html">Filter par catégorie</a>
+  <a class="nav-item" href="./src/filterbyglass/index.html">Filter par verre</a>
+  <a class="nav-item" href="./src/wishlist/index.html">Ma wishlist</a>
+  </div>
   <h1>Rechercher un cocktail par son nom</h1>
   <input type="text" id="search-input" placeholder="Search cocktails">
   <button id="search-button">Search</button>

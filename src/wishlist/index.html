@@ -4,7 +4,7 @@
   <title>Ma wishlist</title>
 </head>
 <style>
-  button {
+button {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
@@ -14,26 +14,27 @@
   display: inline-block;
   font-size: 16px;
 }
-#wishlist {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
-    width: 80%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
 
-  .wishlist-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f2f2f2;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-  }
+#wishlist {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  width: 80%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.wishlist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f2f2f2;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
 
 .wishlist-item p {
   font-size: 18px;
@@ -42,6 +43,14 @@
 
 .wishlist-item p:first-child {
   font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin: 30px 0;
+  font-family: Arial, sans-serif;
+  color: #4CAF50;
 }
 </style>
 <body>

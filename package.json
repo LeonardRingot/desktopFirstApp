@@ -1,6 +1,6 @@
 {
   "name": "desktopfirstapp",
-  "version": "1.0.26",
+  "version": "1.0.28",
   "description": "My first app desktop",
   "main": "main.js",
   "scripts": {
@@ -23,8 +23,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/LeonardRingot/desktopFirstApp.git"
-  },
-  "win": {
-    "icon": "bin/images/cocktail.ico"
   }
 }

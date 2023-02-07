@@ -34,7 +34,7 @@ const createWindow = () => {
     win = new BrowserWindow({
       width: 800,
       height: 600,
-      icon: __dirname + '/images/cocktail.ico',
+      icon: __dirname + '/images/icon.ico',
       webPreferences: {
         nodeIntegration: true,
         preload: path.join(__dirname, 'preload.js')
@@ -87,7 +87,7 @@ const createWindow = () => {
     throw err;
     } else if (row) {
     console.log(`Cocktail already exists in the wishlist`);
-    event.sender.send('saveToWishlist error', 'Le Cocktail existe deja dans la wishlist tu vas quand meme pas en abuser hein :)');
+    event.sender.send('saveToWishlist error', 'Le Cocktail existe deja dans la wishlist');
     } else {
       UserId = '1'
     database.run( `INSERT INTO wishlist (idDrink, strDrink, strInstructions, strGlass, strIngredient1, strIngredient2,strIngredient3, UserId) VALUES (?, ?, ?, ?, ?,?,?,? )` , [idDrink, strDrink,strInstructions, strGlass,strIngredient1,strIngredient2,strIngredient3, UserId], function(err) {
@@ -95,7 +95,7 @@ const createWindow = () => {
     throw err;
     } else {
     console.log(`Cocktail added to the wishlist: test`);
-    event.sender.send('saveToWishlist success', 'Le cocktail a été ajouté dans la wishlist sale alcoolique');
+    event.sender.send('saveToWishlist success', 'Le cocktail a été ajouté dans la wishlist');
     }
     });
     }

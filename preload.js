@@ -112,9 +112,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         window.postMessage({ type: "displayWishlist success", wishlist: wishlist }, "*");
         });
 
-        
-        
-       
           
           window.addEventListener('message', (event) => {
           if (event.data.type === 'displayWishlist') {
