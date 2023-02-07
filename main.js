@@ -140,7 +140,7 @@ const createWindow = () => {
         });
     });
 
-    const insertSql = `INSERT OR IGNORE INTO user (username, password)
+    const insertSql = `INSERT INTO user (username, password)
     VALUES ('admin', 'admin')`;
 
 database.run(insertSql, function (err) {
