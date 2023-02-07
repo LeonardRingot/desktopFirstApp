@@ -1,6 +1,6 @@
 {
   "name": "desktopfirstapp",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "My first app desktop",
   "main": "main.js",
   "scripts": {
