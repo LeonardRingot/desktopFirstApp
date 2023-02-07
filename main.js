@@ -151,8 +151,9 @@ database.run(insertSql, function (err) {
     }
 });
     ipcMain.on('login', (event, username, password) => {
+      console.log('aaaaaaaaaaaaa')
       const sql = `SELECT * FROM user WHERE username = '${username}' AND password = '${password}'`;
-    
+    console.log('test')
       database.get(sql, (err, row) => {
           if (err) {
               console.error(err.message);
