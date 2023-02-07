@@ -4,7 +4,7 @@ const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
 let win
 //./database/cocktail.db
-const database = new sqlite3.Database(__dirname + "/db.sqlite3", (err) => {
+const database = new sqlite3.Database("./db.sqlite3", (err) => {
   if (err) console.error('Database opening error: ', err);
   console.log('Connected to the in-memory sqlite db')
 });
