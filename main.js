@@ -7,7 +7,7 @@ let win
 const databasePath = path.resolve(__dirname, './db.sqlite3');
 const database = new sqlite3.Database(databasePath, (err) => {
   if (err) console.error('Database opening error: ', err);
-  console.log('Connected to the in-memory sqlite db')
+  console.log('Connected to the in-memory sqlite db raaa')
 });
 database.run(`
 CREATE TABLE IF NOT EXISTS user (
