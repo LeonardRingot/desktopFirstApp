@@ -2,7 +2,7 @@ const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const cocktailList = document.getElementById("cocktail-list");
 
-function displayCocktails(searchTerm = '') {
+function displayCocktailsofIngredients(searchTerm = '') {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchTerm}`)
     .then(response => response.json())
     .then(data => {
@@ -15,7 +15,7 @@ function displayCocktails(searchTerm = '') {
         console.log('test3')
         if(drink.strDrink.toLowerCase()){
             html+= `
-            <div class="cocktail-card" onclick="displayCocktails('${drink.idDrink}')">
+            <div class="cocktail-card">
               <h2>${drink.strDrink}</h2>
               <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
             </div>
@@ -30,12 +30,12 @@ function displayCocktails(searchTerm = '') {
     });
 }
 
-displayCocktails();
+displayCocktailsofIngredients();
 
 searchInput.addEventListener("input", function() {
   let searchTerm = searchInput.value;
   if (!searchTerm) {
     searchTerm = '';
   }
-  displayCocktails(searchTerm);
+  displayCocktailsofIngredients(searchTerm);
 });

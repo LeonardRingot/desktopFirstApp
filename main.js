@@ -1,13 +1,13 @@
-const { app, BrowserWindow, ipcMain, Notification } = require('electron')
+const { app, BrowserWindow, ipcMain, Notification, dialog } = require('electron')
 const { autoUpdater } = require('electron-updater');
 const path = require('path')
 const sqlite3 = require('sqlite3').verbose();
 let win
 //./database/cocktail.db
-const databasePath = path.resolve(__dirname, './db.sqlite3');
-const database = new sqlite3.Database(databasePath, (err) => {
+const dbPath = path.join(app.getPath("userData"), "db.sqlite3")
+const database = new sqlite3.Database(dbPath, (err) => {
   if (err) console.error('Database opening error: ', err);
-  console.log('Connected to the in-memory sqlite db raaa')
+  console.log('Connected to the in-memory sqlite db')
 });
 database.run(`
 CREATE TABLE IF NOT EXISTS user (
@@ -89,6 +89,11 @@ const createWindow = () => {
     } else if (row) {
     console.log(`Cocktail already exists in the wishlist`);
     event.sender.send('saveToWishlist error', 'Le Cocktail existe deja dans la wishlist');
+    dialog.showMessageBox({
+      type: 'info',
+      message: 'Le Cocktail existe deja dans la wishlist',
+      buttons: ['OK']
+    });
     } else {
       UserId = '1'
     database.run( `INSERT INTO wishlist (idDrink, strDrink, strInstructions, strGlass, strIngredient1, strIngredient2,strIngredient3, UserId) VALUES (?, ?, ?, ?, ?,?,?,? )` , [idDrink, strDrink,strInstructions, strGlass,strIngredient1,strIngredient2,strIngredient3, UserId], function(err) {
@@ -97,6 +102,11 @@ const createWindow = () => {
     } else {
     console.log(`Cocktail added to the wishlist: test`);
     event.sender.send('saveToWishlist success', 'Le cocktail a été ajouté dans la wishlist');
+    dialog.showMessageBox({
+      type: 'info',
+      message: 'Le Cocktail a été ajouté dans la wishlist',
+      buttons: ['OK']
+    });
     }
     });
     }
@@ -125,6 +135,11 @@ const createWindow = () => {
               console.log('test 4')
                 console.log(`Cocktail doesn't exist in the wishlist`);
                 event.sender.send('deleteWishlistItem error', `Le Cocktail n'existe pas dans la wishlist`);
+                dialog.showMessageBox({
+                  type: 'info',
+                  message: "Le Cocktail n'existe pas dans la wishlist",
+                  buttons: ['OK']
+                });
             } else {
               console.log('test 5')
                 database.run(`DELETE FROM wishlist WHERE idDrink = ?`, [idDrink], function(err) {
@@ -135,13 +150,19 @@ const createWindow = () => {
                       console.log('test 7')
                         console.log(`Cocktail deleted from the wishlist: ${idDrink}`);
                         event.sender.send('deleteWishlistItem success', `Le Cocktail a été supprimé de la wishlist`);
+                        dialog.showMessageBox({
+                          type: 'info',
+                          message: "Le Cocktail a été supprimé de la wishlist",
+                          buttons: ['OK']
+                        });
+                        event.sender.send('refreshWishlist');
                     }
                 });
             }
         });
     });
 
-    const insertSql = `INSERT INTO user (username, password)
+    const insertSql = `INSERT OR IGNORE INTO user (username, password)
     VALUES ('admin', 'admin')`;
 
 database.run(insertSql, function (err) {
@@ -163,6 +184,11 @@ database.run(insertSql, function (err) {
               event.sender.send('login-success');
           } else {
               event.sender.send('login-error', 'Invalid username or password');
+              dialog.showMessageBox({
+                type: 'info',
+                message: 'Invalid username or password',
+                buttons: ['OK']
+              });
           }
       });
   });

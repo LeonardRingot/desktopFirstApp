@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer, dialog } = require('electron')
 
 window.addEventListener('DOMContentLoaded', async () => {
   const replaceText = (selector, text) => {
@@ -51,11 +51,16 @@ window.addEventListener('DOMContentLoaded', async () => {
       }); 
 
       ipcRenderer.on('deleteWishlistItem success', (event, message) => {
-        alert(message);
+        
+        location.reload();
         });
         
         ipcRenderer.on('deleteWishlistItem error', (event, message) => {
-        alert(message);
+      console.log(message)
+        });
+        ipcRenderer.on('refreshWishlist', () => {
+          // refresh the page
+          location.reload();
         });
 
     ipcRenderer.on("saveToWishlist", (event, arg) => {
@@ -64,12 +69,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       
       ipcRenderer.on("saveToWishlist error", (event, message) => {
         console.log(message);
-        alert(message);
       });
       
       ipcRenderer.on("saveToWishlist success", (event, message) => {
         console.log(message);
-        alert(message);
       });
 
       ipcRenderer.on("displayWishlist success", (event, wishlist) => {
@@ -126,7 +129,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
       
       ipcRenderer.on('login-error', (event, message) => {
-        alert(message);
+        console.log(message);
       });
 })
 
