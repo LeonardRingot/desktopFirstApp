@@ -3,6 +3,7 @@ const searchButton = document.getElementById("search-button");
 const cocktailList = document.getElementById("cocktail-list");
 
 function displayCocktailsofIngredients(searchTerm = '') {
+  if(searchTerm){
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchTerm}`)
     .then(response => response.json())
     .then(data => {
@@ -28,6 +29,9 @@ function displayCocktailsofIngredients(searchTerm = '') {
         console.error('There was a problem with the fetch operation:', error);
         cocktailList.innerHTML = '<p>Could not load cocktails. Please try again later.</p>';
     });
+  }else {
+    cocktailList.innerHTML = '';
+  }
 }
 
 displayCocktailsofIngredients();
